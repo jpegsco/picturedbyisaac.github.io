@@ -1,0 +1,443 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Isaac Archambault's nature, portrait, street, and wildlife photography.">
+    <meta http-equiv="refresh" content="0; url=https://www.instagram.com/picturedbyisaac">
+    <title>JPEGs Co | Gallery</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans">
+    <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
+    <style>
+        html {
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+
+        body {
+            margin: 0;
+            background: #202124;
+            overflow-x: hidden;
+        }
+
+        .scrolljack {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /*Loader*/
+
+        .loadscreen {
+            display: block;
+            position: fixed;
+            background-color: #202124;
+            width: 100%;
+            height: 100%;
+            -webkit-transition: 0.5s ease-in-out;
+            transition: 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .loadscreen .loadingIcon {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 55pt;
+            color: #FFFFFF;
+            z-index: 99999;
+        }
+
+        /*Gallery*/
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+            max-width: 1064px;
+        }
+
+        .grid .image {
+            width: calc(100% / 3);
+        }
+
+        .grid img {
+            position: relative;
+            margin: auto;
+            padding-top: 27px;
+            padding-bottom: 27px;
+            width: 300px;
+            height: 300px;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: cover;
+        }
+
+        .endOfImages h2 {
+            display: block;
+            position: relative;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            font-size: 18pt;
+            font-family: "Pacifico";
+            text-align: center;
+            color: white;
+        }
+
+        @media screen and (max-width: 1115px) {
+            .grid {
+                max-width: 854px;
+            }
+
+            .grid .image {
+                width: calc(100% / 2);
+            }
+
+            .grid img {
+                width: 372.5px;
+                height: 372.5px;
+            }
+        }
+
+        @media screen and (max-width: 905px) {
+            .grid {
+                max-width: 100%
+            }
+
+            .grid .image {
+                width: calc(100% / 2);
+            }
+
+            .grid img {
+                padding-top: 3.5vw;
+                padding-bottom: 3.5vw;
+                width: calc(100vw - 57vw);
+                height: calc(100vw - 57vw);
+            }
+
+            .endOfImages h2 {
+                margin-bottom: 25px;
+            }
+        }
+
+        /*Menu*/
+
+        .filters {
+            position: relative;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 80px;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .filters .filterName {
+            display: block;
+            position: relative;
+            padding-top: calc(100vh / 33.33);
+            padding-bottom: calc(100vh / 33.33);
+            font-family: "Open Sans", sans-serif;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            z-index: 99;
+        }
+
+        .filters .filterName:last-child {
+            border-bottom: 0px;
+        }
+
+        .filters .filterIcons {
+            pointer-events: none;
+        }
+
+        .filters .selected {
+            color: rgba(255, 255, 255, 1.0);
+        }
+
+        .filters .dropdown {
+            position: absolute;
+            right: 20px;
+            color: #FFFFFF;
+            font-size: 30pt;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .filters .dropdownContent {
+            display: none;
+            position: fixed;
+            width: 100%;
+            max-width: 480px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+        }
+
+        .filters .dropdownBackground {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(32, 33, 36, 0.95);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1;
+        }
+
+        /*Header*/
+
+        header {
+            display: block;
+            position: relative;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        header h1 {
+            display: block;
+            position: relative;
+            margin: 0 auto;
+            padding-top: 30px;
+            padding-bottom: 20px;
+            font-size: 40pt;
+            font-family: "Pacifico";
+            text-align: center;
+            color: white;
+            z-index: -1;
+        }
+
+        .headerIconsContainer {
+            display: block;
+            position: relative;
+        }
+
+        .headerIconsContainer .headerIcons {
+            display: block;
+            position: absolute;
+            margin: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .headerIconsContainer .headerIcons a {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .headerIconsContainer .headerIcons i {
+            display: block;
+            padding-left: 3px;
+            padding-right: 3px;
+            font-size: 20pt;
+            color: #FFFFFF;
+        }
+
+        @media screen and (max-width: 480px) {
+            header h1 {
+                font-size: 28pt;
+            }
+        }
+
+        /*Footer*/
+
+        footer {
+            display: block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 80px;
+            bottom: 0;
+            background: #1D1D1D;
+            z-index: -1;
+        }
+
+        footer a {
+            display: inline-block;
+            text-decoration: none;
+            color: #CCCCCC;
+        }
+
+        .footertext {
+            display: block;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFFFFF;
+            font-family: "Open Sans", sans-serif;
+            font-size: 12pt;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loadscreen">
+        <div class="loadingIcon">
+            <i class="fa-solid fa-camera fa-bounce"></i>
+        </div>
+    </div>
+    <div class="filters">
+        <i class="dropdown fa-solid fa-filter-list"></i>
+        <div class="dropdownContent">
+            <a class="filterName" name="all"><i class="fa-solid fa-grid-2 filterIcons">&nbsp;</i>all</a>
+            <a class="filterName" name="nature"><i class="fa-solid fa-trees filterIcons">&nbsp;</i>nature</a>
+            <a class="filterName" name="wildlife"><i class="fa-solid fa-squirrel filterIcons"></i>&nbsp;</i>wildlife</a>
+            <a class="filterName" name="architecture"><i class="fa-solid fa-building filterIcons">&nbsp;</i>architecture</a>
+            <a class="filterName" name="street"><i class="fa-solid fa-users-viewfinder filterIcons"></i>&nbsp;</i>street</a>
+            <a class="filterName" name=""><i class="fa-solid fa-image-portrait filterIcons">&nbsp;</i>portrait</a>
+        </div>
+        <div class="dropdownBackground"></div>
+    </div>
+    <header>
+        <div class="headerIconsContainer">
+            <div class="headerIcons">
+                <a href="https://www.instagram.com/picturedbyisaac" target="_blank">
+                    <i class="fa-brands fa-square-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/isaacarchambault" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://www.isaac.ar" target="_blank">
+                    <i class="fa-sharp fa-link-horizontal"></i>
+                </a>
+            </div>
+        </div>
+        <h1>Isaac's Photography</h1>
+    </header>
+    <div class="endOfImages">
+        <h2>That's all folks!</h2>
+    </div>
+    <footer>
+        <div class="footertext">Copyright © 2023 <a href="https://yourb.io/isaac">Isaac Archambault</a></div>
+    </footer>
+    <script>
+        window.addEventListener("load", (event) => {
+            async function loadGallery() {
+                var grid = document.createElement("div");
+                grid.classList.add("grid");
+                var header = document.querySelector("header");
+                header.parentNode.insertBefore(grid, header.nextSibling);
+                let url = 'https://script.google.com/macros/s/AKfycbyA1R__4ESWeR4MXuVipk-_oVhh8ADSvtxRd6WzPkUqsogPOnUy-HRNoT8iObxdZUyoTg/exec';
+                let obj = await (await fetch(url)).json();
+                var objString = JSON.stringify(obj);
+                var galleryImages = JSON.parse(objString);
+                for (var i = 0; i < galleryImages.data.length; i++) {
+                    var newImage = document.createElement("img");
+                    newImage.src = "https://lh3.googleusercontent.com/d/" + galleryImages.data[i].img_id;
+                    newImage.alt = galleryImages.data[i].description;
+                    var imageContainer = document.createElement("div");
+                    imageContainer.classList.add("image");
+                    grid.appendChild(imageContainer);
+                    imageContainer.appendChild(newImage);
+                }
+                localStorage.clear();
+                var grid = document.querySelector(".grid");
+                var imageCache = grid.innerHTML;
+                localStorage.setItem("imageCache", imageCache);
+                setClickableImages();
+
+                function killLoader() {
+                    var loadscreen = document.querySelector(".loadscreen");
+                    loadscreen.parentNode.removeChild(loadscreen);
+                }
+                killLoader();
+            }
+            loadGallery();
+        });
+
+        function setClickableImages() {
+            var images = document.querySelectorAll("img");
+            images.forEach(image => {
+                image.addEventListener('click', function() {
+                    window.open(image.src);
+                });
+            });
+        }
+        var dropdown = document.querySelector(".dropdown");
+        var dropdownContent = document.querySelector(".dropdownContent");
+        var dropdownBackground = document.querySelector(".dropdownBackground");
+        dropdownStatus = "closed";
+
+        function dropdownToggle() {
+            if (dropdownStatus === "closed") {
+                dropdown.classList.add("fa-xmark-large");
+                dropdownContent.style.display = "block";
+                dropdownBackground.style.display = "block";
+                document.body.classList.add("scrolljack");
+                setTimeout(function() {
+                    dropdownStatus = "open";
+                }, 100);
+            } else {
+                dropdown.classList.remove("fa-xmark-large");
+                dropdownContent.style.display = "none";
+                dropdownBackground.style.display = "none";
+                document.body.classList.remove("scrolljack");
+                setTimeout(function() {
+                    dropdownStatus = "closed";
+                }, 100);
+            }
+        }
+        dropdown.addEventListener('click', dropdownToggle);
+        var filters = document.querySelectorAll(".filterName");
+        filters[0].classList.add("selected");
+        filters.forEach(filter => {
+            filter.onclick = e => {
+                console.log(filters);
+                filters.forEach(filter => {
+                    filter.classList.remove("selected");
+                });
+                var selection = e.target;
+                selection.classList.add("selected");
+                var name = selection.getAttribute("name");
+                if (name === "all") {
+                    var imageCache = localStorage.getItem("imageCache");
+                    var replaceCache = document.querySelector(".grid").innerHTML = imageCache;
+                    setClickableImages();
+                    dropdownToggle();
+                } else {
+                    var imageCache = localStorage.getItem("imageCache");
+                    var replaceCache = document.querySelector(".grid").innerHTML = imageCache;
+                    var images = document.querySelectorAll("img");
+                    images.forEach(image => {
+                        if (image.getAttribute("alt").includes(name) != true) {
+                            image.parentNode.remove();
+                        }
+                    });
+                    setClickableImages();
+                    dropdownToggle();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
